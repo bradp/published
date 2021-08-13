@@ -1,0 +1,12 @@
+{
+	"name": "bradp/scheduled",
+	"type": "wordpress-plugin",
+	"description": "View scheduled posts",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+	  {
+		"name": "Brad Parbs",
+		"email": "brad@bradparbs.com"
+	  }
+	]
+}
