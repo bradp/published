@@ -16,7 +16,6 @@ namespace Published;
 
 use WP_Query;
 
-
 // Add new dashboard widget with list of published posts.
 add_action(
 	'wp_dashboard_setup',
@@ -36,7 +35,7 @@ add_action(
  * Add dashboard widget for published posts.
  */
 function dashboard_widget() {
-	$posts = new \WP_Query(
+	$posts = new WP_Query(
 		[
 			'post_type'      => get_post_types(),
 			'orderby'        => 'date',
