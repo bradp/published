@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Published
  * Description: Quickly and easily view the last published posts.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      Brad Parbs
  * Author URI:  https://bradparbs.com/
  * License:     GPLv2
@@ -22,7 +22,7 @@ add_action(
 	'wp_dashboard_setup',
 	function () {
 		wp_add_dashboard_widget(
-			'modified',
+			'published',
 			sprintf(
 				'<span><span class="dashicons dashicons-clock" style="padding-right: 10px"></span>%s</span>',
 				esc_attr__( 'Recently Published', 'published' )
