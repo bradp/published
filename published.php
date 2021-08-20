@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Published
  * Description: Quickly and easily view the last published posts.
- * Version:     1.1.0
+ * Version:     1.1.1
  * Author:      Brad Parbs
  * Author URI:  https://bradparbs.com/
  * License:     GPLv2

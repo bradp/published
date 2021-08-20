@@ -3,7 +3,7 @@ Contributors: bradparbs, surfboards
 Tags: posts, published, widget, dashboard, content, calendar
 Requires at least: 5.2
 Tested up to: 5.8
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 Requires PHP: 5.6
 
@@ -23,10 +23,14 @@ Quickly and easily view all your published posts.
 
 == Changelog ==
 
-= 1.1.0 =
+= 1.1.1 =
 
 * Added more filters
 
-= 1.0.3 =
+= 1.1.0 =
+
+* Fix namespace
+
+= 1.0.0 =
 
 * Initial release

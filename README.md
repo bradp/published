@@ -16,10 +16,14 @@ Quickly and easily view all your recently published posts.
 
 ## Changelog
 
-### 1.1.0
+### 1.1.1
 
 * Added more filters
 
-### 1.0.3
+### 1.1.0
+
+* Fix namespace
+
+### 1.0.0
 
 * Initial release
