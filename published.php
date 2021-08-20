@@ -16,49 +16,36 @@ namespace Published;
 
 use WP_Query;
 
-// Add new dashboard widget with list of published posts.
-add_action(
-	'wp_dashboard_setup',
-	function () {
-		wp_add_dashboard_widget(
-			'published',
-			sprintf(
-				'<span><span class="dashicons dashicons-clock" style="padding-right: 10px"></span>%s</span>',
-				esc_attr__( 'Recently Published', 'published' )
-			),
-			__NAMESPACE__ . '\\dashboard_widget'
-		);
-	}
-);
+add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\add_dashboard_widget' );
 
 /**
- * Add dashboard widget for published posts.
+ * Add new dashboard widget with list of recently published posts.
  */
-function dashboard_widget() {
-	$posts = new WP_Query(
-		[
-			'post_type'      => get_post_types(),
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-			'posts_per_page' => 25,
-			'no_found_rows'  => true,
-		]
+function add_dashboard_widget() {
+	$name = sprintf(
+		'<span><span class="dashicons %s" style="padding-right: 10px"></span>%s</span>',
+		apply_filters( 'published_widget_icon', 'dashicons-clock' ),
+		apply_filters( 'published_widget_title', esc_attr__( 'Recently Published', 'published' ) )
 	);
 
-	$published = [];
+	wp_add_dashboard_widget( 'published', $name, __NAMESPACE__ . '\\dashboard_widget' );
+}
 
-	if ( $posts->have_posts() ) {
-		while ( $posts->have_posts() ) {
-			$posts->the_post();
+/**
+ * Add dashboard widget for recently published posts.
+ */
+function dashboard_widget() {
+	$post_types = apply_filters( 'published_post_types_to_show', get_post_types() );
+	$query_args = apply_filters( 'published_widget_query_args', [
+		'post_type'      => $post_types,
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+		'posts_per_page' => 25,
+		'no_found_rows'  => true,
+	] );
 
-			$published[] = [
-				'ID'      => get_the_ID(),
-				'title'   => get_the_title(),
-				'date'    => gmdate( 'F j, g:ia', get_the_time( 'U' ) ),
-				'preview' => get_preview_post_link(),
-			];
-		}
-	}
+	$posts     = new WP_Query( $query_args );
+	$published = get_published_posts( $posts );
 
 	printf(
 		'<div id="published-posts-widget-wrapper">
@@ -69,8 +56,39 @@ function dashboard_widget() {
 		display_published_in_widget( $published ) // phpcs:ignore
 	);
 }
+
 /**
- * Display published posts in widget.
+ * Get the recently published posts to display in the dashboard widget.
+ *
+ * @param WP_Query $posts WP_Query object.
+ *
+ * @return array Array of recently published posts.
+ */
+function get_published_posts( $posts ) {
+	$published = [];
+
+	if ( $posts->have_posts() ) {
+		while ( $posts->have_posts() ) {
+			$posts->the_post();
+
+			$add_to_published = apply_filters( 'schedules_show_in_widget', [
+				'ID'      => get_the_ID(),
+				'title'   => get_the_title(),
+				'date'    => gmdate( 'F j, g:ia', get_the_time( 'U' ) ),
+				'preview' => get_preview_post_link(),
+			] );
+
+			if ( isset( $add_to_published ) ) {
+				$published[] = $add_to_published;
+			}
+		}
+	}
+
+	return $published;
+}
+
+/**
+ * Display recently published posts in widget.
  *
  * @param array $posts Post data.
  *
