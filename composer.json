@@ -1,7 +1,7 @@
 {
-	"name": "bradp/scheduled",
+	"name": "bradp/published",
 	"type": "wordpress-plugin",
-	"description": "View scheduled posts",
+	"description": "Quickly and easily view all your recently published posts",
 	"license": "GPL-2.0-or-later",
 	"authors": [
 	  {
